@@ -11,7 +11,7 @@ Dependencies are listed in requirements.txt file and automatically installed by 
 
 
 ## Executing
-Install and run robot with docker-compose
+Install and run with docker-compose
 
 ```bash
   sudo docker-compose up
