@@ -1,0 +1,3457 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is API documentiation for pargar team",
+    "version": "1.0.0",
+    "title": "Pargar Swagger"
+  },
+  "host": "consultant-iust.herokuapp.com",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Everything about normal user"
+    },
+    {
+      "name": "Consultant",
+      "description": "Everything about consultant"
+    },
+    {
+      "name": "Profile",
+      "description": "Everything about profile"
+    },
+    {
+      "name": "Request",
+      "description": "Everything about requests"
+    },
+    {
+      "name": "Channel",
+      "description": "Everything about channel"
+    },
+    {
+      "name": "Channel-Message",
+      "description": "Everything about channel-message"
+    },
+    {
+      "name": "Filling-DB",
+      "description": "insert fake data to DB"
+    },
+    {
+      "name": "Reservation",
+      "description": "user's reserve time of consultant's"
+    },
+    {
+      "name": "Calendar",
+      "description": "Everything about calendar"
+    },
+    {
+      "name": "Direct",
+      "description": "Everything about Direct can be implement in api"
+    },
+    {
+      "name": "Comment",
+      "description": "Everything about Comment"
+    },
+    {
+      "name": "Video-Chat",
+      "description": "Everything about vidoe-chat"
+    }
+  ],
+  "schemes": [
+    "http",
+    "ws"
+  ],
+  "paths": {
+    "/user/signup/": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "create a new user",
+        "operationId": "createNormalUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Normal user fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "userName"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "first_name": {
+                  "type": "string"
+                },
+                "last_name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "password_repetition": {
+                  "type": "string"
+                },
+                "phone_number": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    },
+                    "user_type": {
+                      "type": "string"
+                    },
+                    "private_profile": {
+                      "type": "boolean"
+                    },
+                    "avatar": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/user/signup-activate-email/": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "create a new user",
+        "operationId": "createNormalUserEmailActivate",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "code",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/user/resent-code/": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "create a new user",
+        "operationId": "createUserResentEmailCode",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/user/login/": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Login normal user",
+        "operationId": "loginNormalUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Login user fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "email_username"
+              ],
+              "properties": {
+                "email_username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid input value"
+          }
+        }
+      }
+    },
+    "/user/channel-role/{channelId}/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "get user role in channel",
+        "operationId": "getUserRoleInChannel",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelId",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string"
+                },
+                "invite_link": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consultant/signup/": {
+      "post": {
+        "tags": [
+          "Consultant"
+        ],
+        "summary": "create a new user",
+        "operationId": "createConsultant",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "phone_number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "first_name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "last_name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "password_repetition",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "user_type",
+            "required": true,
+            "type": "string",
+            "default": "Lawyer"
+          },
+          {
+            "in": "formData",
+            "name": "certificate",
+            "required": true,
+            "type": "file",
+            "description": "certificate for consultant."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    },
+                    "user_type": {
+                      "type": "string"
+                    },
+                    "private_profile": {
+                      "type": "boolean"
+                    },
+                    "avatar": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/consultant/signup-activate-email/": {
+      "post": {
+        "tags": [
+          "Consultant"
+        ],
+        "summary": "create a new user",
+        "operationId": "createConsultantEmailAuth",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "code",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/consultant/resent-code/": {
+      "post": {
+        "tags": [
+          "Consultant"
+        ],
+        "summary": "create a new user",
+        "operationId": "createConsultantResentEmailCode",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/consultant/search-consultants/": {
+      "get": {
+        "tags": [
+          "Consultant"
+        ],
+        "summary": "search for a set of Consultant",
+        "operationId": "SeachForConsultant",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "description": "user text for search",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "search_category",
+            "description": "category of Consultant (can be None or '' to search generally)",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "page number in pagination",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer"
+                },
+                "next": {
+                  "type": "string"
+                },
+                "previous": {
+                  "type": "string"
+                },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "avatar": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "first_name": {
+                        "type": "string"
+                      },
+                      "last_name": {
+                        "type": "string"
+                      },
+                      "phone_number": {
+                        "type": "string"
+                      },
+                      "private_profile": {
+                        "type": "string"
+                      },
+                      "user_type": {
+                        "type": "string"
+                      },
+                      "count_of_all_comments": {
+                        "type": "integer"
+                      },
+                      "satisfaction_percentage": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden "
+          }
+        }
+      }
+    },
+    "/profile/": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "update profile",
+        "operationId": "updateProfile",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "phone_number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "first_name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "last_name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "avatar",
+            "required": true,
+            "type": "file",
+            "description": "user avatar."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "phone_number": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "user_type": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "get profile",
+        "operationId": "getProfile",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "phone_number": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "certificate": {
+                  "type": "string"
+                },
+                "user_type": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/profile/{username}/": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "get another user profile",
+        "operationId": "getAnotherProfile",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "certificate": {
+                  "type": "string"
+                },
+                "user_type": {
+                  "type": "string"
+                },
+                "channel_id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/consultant/login/": {
+      "post": {
+        "tags": [
+          "Consultant"
+        ],
+        "summary": "Login Consultant",
+        "description": "Like normal user login",
+        "operationId": "loginConsultant",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/channel/invite-link/": {
+      "get": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "get a unique invite-link",
+        "operationId": "getInviteLink",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "invite_link": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden "
+          }
+        }
+      }
+    },
+    "/channel/{channelId}": {
+      "get": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "Get channel with Channel ID",
+        "operationId": "GetchannelWithID ",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "invite_link": {
+                  "type": "string"
+                },
+                "consultant": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden "
+          }
+        }
+      }
+    },
+    "/channel/": {
+      "post": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "create a new channel for consultant",
+        "operationId": "createChannel",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Channel fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "description",
+                "invite_link"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "invite_link": {
+                  "type": "string",
+                  "maxLength": 32
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "consultant": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "invite_link": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/channel/update-channel-inf/{channelId}/": {
+      "put": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "update channel information (all part of form are optionl if you would not updata not fill it",
+        "operationId": "updateChannelInformation",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelId",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "description",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "invite_link",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "avatar",
+            "required": false,
+            "type": "file",
+            "description": "user avatar."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/user/channels/": {
+      "get": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "get all user channels",
+        "operationId": "userChannels",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "invite_link": {
+                    "type": "string"
+                  },
+                  "user_role": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/channel-message/{channelId}/{messageId}/": {
+      "put": {
+        "tags": [
+          "Channel-Message"
+        ],
+        "summary": "update channel message",
+        "operationId": "updateChannelMessage",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "messageId",
+            "description": "Message Id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "path",
+            "name": "channelId",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "text",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "message_file",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "message_type",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "a",
+              "i",
+              "v",
+              "t"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "channel_id": {
+                  "type": "integer"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "creator": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "message_file": {
+                  "type": "string"
+                },
+                "message_type": {
+                  "type": "string",
+                  "enum": [
+                    "t",
+                    "a",
+                    "i",
+                    "v"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Channel-Message"
+        ],
+        "summary": "delete a channel message",
+        "operationId": "deleteChannelMessage",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "messageId",
+            "description": "Message Id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "path",
+            "name": "channelId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string",
+              "default": "message deleted"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/channel-message/{channelId}/": {
+      "get": {
+        "tags": [
+          "Channel-Message"
+        ],
+        "summary": "get channel messages",
+        "operationId": "getChannelMessages",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelId",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "description": "The channel ID"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "type": "integer",
+            "minimum": 1,
+            "description": "The number of page of channel messages"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer"
+                },
+                "next": {
+                  "type": "string"
+                },
+                "previous": {
+                  "type": "string"
+                },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "channel_id": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      },
+                      "message_type": {
+                        "type": "string"
+                      },
+                      "message_file": {
+                        "type": "string"
+                      },
+                      "creator": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "usernaem": {
+                            "type": "string"
+                          },
+                          "phone_number": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Channel-Message"
+        ],
+        "summary": "create a new channel message",
+        "operationId": "createChannelMessage",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelId",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "text",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "message_file",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "message_type",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "a",
+              "i",
+              "v",
+              "t"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "channel_id": {
+                  "type": "integer"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "creator": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "message_file": {
+                  "type": "string"
+                },
+                "message_type": {
+                  "type": "string",
+                  "enum": [
+                    "t",
+                    "a",
+                    "i",
+                    "v"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/channel/subscription/": {
+      "post": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "add new subscriber for channel",
+        "operationId": "addNewSubscriber",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Subscription fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "invite_link"
+              ],
+              "properties": {
+                "invite_link": {
+                  "type": "string",
+                  "maxLength": 32
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/channel/search-for-channel/": {
+      "get": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "search for a set of channel or specific channel between all channels or between channel of a specific category(public api)",
+        "operationId": "SeachForChannel",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "description": "user text for search",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "search_category",
+            "description": "category of channels (can be None or '' to search generally)",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "page number in pagination",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer"
+                },
+                "next": {
+                  "type": "string"
+                },
+                "previous": {
+                  "type": "string"
+                },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "consultant": {
+                        "type": "object",
+                        "properties": {
+                          "username": {
+                            "type": "string"
+                          },
+                          "phone_number": {
+                            "type": "string"
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "invite_link": {
+                        "type": "string"
+                      },
+                      "avatar": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden "
+          }
+        }
+      }
+    },
+    "/channel/suggestion-channel/": {
+      "get": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "suggested channel for main page",
+        "operationId": "SuggestedChannel",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_type": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "consultant_full_name": {
+                        "type": "string"
+                      },
+                      "invite_link": {
+                        "type": "string"
+                      },
+                      "channelID": {
+                        "type": "integer"
+                      },
+                      "avatar": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden "
+          }
+        }
+      }
+    },
+    "/channel/channel-subscriber/{channelId}/": {
+      "get": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "get channel subscriber just secretory and consultant",
+        "operationId": "ChannelSubscriber",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "user_type": {
+                        "type": "string"
+                      },
+                      "avatar": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden "
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "Remove subscriber from channel",
+        "operationId": "RemoveSubscriber",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Remove subscriber fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "invite_link"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "maxLength": 150
+                }
+              }
+            }
+          },
+          {
+            "in": "path",
+            "name": "channelId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/channel/channel-admins/{channelId}/": {
+      "get": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "get channel admin and consultant(public api)",
+        "operationId": "ChannelAdmins",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "consultant": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "user_type": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "admin": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "user_type": {
+                        "type": "string"
+                      },
+                      "avatar": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden "
+          }
+        }
+      }
+    },
+    "/request/applicant/": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "get applicant request",
+        "operationId": "getApplicantRequest",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "channel": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "invite_link": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "request_text": {
+                  "type": "string"
+                },
+                "request_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "answer_text": {
+                  "type": "string"
+                },
+                "answer_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "accept": {
+                  "type": "boolean"
+                },
+                "target_user": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "request_type": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "create new request",
+        "operationId": "createRequest",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Secretary request fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "request_type",
+                "target_user"
+              ],
+              "properties": {
+                "target_user": {
+                  "type": "string"
+                },
+                "request_text": {
+                  "type": "string"
+                },
+                "request_type": {
+                  "type": "string",
+                  "enum": [
+                    "join_channel",
+                    "secretary"
+                  ]
+                },
+                "channel": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "channel": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "invite_link": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "request_text": {
+                  "type": "string"
+                },
+                "request_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "answer_text": {
+                  "type": "string"
+                },
+                "answer_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "accept": {
+                  "type": "boolean"
+                },
+                "target_user": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "request_type": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "delete requests",
+        "operationId": "deleteRequest",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Secretary request fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "request_id",
+                "request_type"
+              ],
+              "properties": {
+                "request_type": {
+                  "type": "string",
+                  "enum": [
+                    "join_channel",
+                    "secretary"
+                  ]
+                },
+                "request_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/request/responder/": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "get all use requests",
+        "operationId": "getUserRequest",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "channel": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "invite_link": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "request_text": {
+                  "type": "string"
+                },
+                "request_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "answer_text": {
+                  "type": "string"
+                },
+                "answer_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "accept": {
+                  "type": "boolean"
+                },
+                "target_user": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "request_type": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "answr to requests",
+        "operationId": "answerToRequest",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Secretary request fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "request_type",
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "request id"
+                },
+                "accept": {
+                  "type": "boolean"
+                },
+                "request_type": {
+                  "type": "string",
+                  "enum": [
+                    "join_channel",
+                    "secretary"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "channel": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "invite_link": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "request_text": {
+                  "type": "string"
+                },
+                "request_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "answer_text": {
+                  "type": "string"
+                },
+                "answer_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "accept": {
+                  "type": "boolean"
+                },
+                "target_user": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "request_type": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fakeData/": {
+      "get": {
+        "tags": [
+          "Filling-DB"
+        ],
+        "summary": "insert fake data to DB",
+        "operationId": "Insert-Data",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calendar/reserve/{ConsultantID}/": {
+      "post": {
+        "tags": [
+          "Reservation"
+        ],
+        "summary": "Reserving Time",
+        "operationId": "ReserveTime",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ConsultantID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Reserve Time for consultant: => date format:     '2021-05-08 07:52:40'",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "email_username"
+              ],
+              "properties": {
+                "start_date": {
+                  "type": "string"
+                },
+                "end_date": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid input value"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Reservation"
+        ],
+        "summary": "get all free time of consul",
+        "operationId": "Get-Reservation-Time",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ConsultantID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "description": "date of requesd time :  2021-10-01",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "obsolete_reserved_time": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "start_time": {
+                            "type": "string"
+                          },
+                          "end_time": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "obsolete_empty_time": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "start_time": {
+                            "type": "string"
+                          },
+                          "end_time": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "empty_time": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "start_time": {
+                            "type": "string"
+                          },
+                          "end_time": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "reserved_time": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "start_time": {
+                            "type": "string"
+                          },
+                          "end_time": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calendar/consultant-time/": {
+      "get": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "get all consultant time",
+        "operationId": "getConsultantTime",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "type": "string",
+            "format": "date",
+            "default": "2021-01-30"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "start_date": {
+                  "type": "string"
+                },
+                "end_date": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "consultant": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "create new consultant time",
+        "operationId": "createConsultantTime",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "consultant time fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "start_date",
+                "end_date"
+              ],
+              "properties": {
+                "start_date": {
+                  "type": "string"
+                },
+                "end_date": {
+                  "type": "string"
+                },
+                "consultant_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "start_date": {
+                  "type": "string"
+                },
+                "end_date": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calendar/consultant-time/{ConsultantTimeId}/": {
+      "put": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "update  consultant time",
+        "operationId": "updateConsultantTime",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ConsultantTimeId",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "consultant time fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "start_date",
+                "end_date"
+              ],
+              "properties": {
+                "start_date": {
+                  "type": "string"
+                },
+                "end_date": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "start_date": {
+                  "type": "string"
+                },
+                "end_date": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "delete  consultant time",
+        "operationId": "deleteConsultantTime",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ConsultantTimeId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/calendar/consultant-time/cancel/{ConsultantTimeId}/": {
+      "delete": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "cancel  consultant time",
+        "operationId": "cancelConsultantTime",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ConsultantTimeId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/chat/direct/contact/": {
+      "get": {
+        "tags": [
+          "Direct"
+        ],
+        "summary": "List of Connecting User(has chat with them)",
+        "operationId": "DirectMessage",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "avatar": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "phone_number": {
+                    "type": "string"
+                  },
+                  "user_type": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden "
+          }
+        }
+      }
+    },
+    "/chat/direct/history/{UserName}/": {
+      "get": {
+        "tags": [
+          "Direct"
+        ],
+        "summary": "Get History of Direct message with specific user",
+        "operationId": "DirectMessageHistory",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "UserName",
+            "description": "Direct of who?",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "page number in pagination(for history message)",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer"
+                },
+                "next": {
+                  "type": "string"
+                },
+                "previous": {
+                  "type": "string"
+                },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "sender": {
+                        "type": "integer"
+                      },
+                      "reciever": {
+                        "type": "integer"
+                      },
+                      "text": {
+                        "type": "string"
+                      },
+                      "message_type": {
+                        "type": "string"
+                      },
+                      "message_file": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden "
+          }
+        }
+      }
+    },
+    "/chat/direct/message/": {
+      "post": {
+        "tags": [
+          "Direct"
+        ],
+        "summary": "create a new chat message in direct",
+        "operationId": "createDirectMessage",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "text",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "message_file",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "message_type",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "a",
+              "i",
+              "v",
+              "t"
+            ]
+          },
+          {
+            "in": "formData",
+            "name": "receiver_username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "message_type": {
+                  "type": "string"
+                },
+                "message_file": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/chat/direct/message/{ChatMessageId}/": {
+      "put": {
+        "tags": [
+          "Direct"
+        ],
+        "summary": "update direct message",
+        "operationId": "updateDirectMessage",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ChatMessageId",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "description": "The direct message ID"
+          },
+          {
+            "in": "formData",
+            "name": "text",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "message_file",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "message_type",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "a",
+              "i",
+              "v",
+              "t"
+            ]
+          },
+          {
+            "in": "formData",
+            "name": "receiver_username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Direct"
+        ],
+        "summary": "get direct message",
+        "operationId": "getDirectMessage",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ChatMessageId",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "description": "The deirect message ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "message_type": {
+                  "type": "string"
+                },
+                "message_file": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Direct"
+        ],
+        "summary": "delete direct message",
+        "operationId": "deleteDirectMessage",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ChatMessageId",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "description": "The deirect message ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/calendar/consultant-time/comment/{ConsultantTimeId}/": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "create a new comment",
+        "operationId": "createComment",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ConsultantTimeId",
+            "required": true,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Normal user fields",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "user_grade"
+              ],
+              "properties": {
+                "user_grade": {
+                  "type": "integer",
+                  "maximum": 5,
+                  "minimum": 0,
+                  "description": "Between 0 and 5"
+                },
+                "user_comment": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/consultant/comment/{ConsultatntUsername}": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "get consultant comments",
+        "operationId": "getComments",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ConsultatntUsername",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "user_grade_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "first_name": {
+                      "type": "string"
+                    },
+                    "last_name": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "user_grade": {
+                  "type": "integer"
+                },
+                "user_comment": {
+                  "type": "string"
+                },
+                "count_of_all_comments": {
+                  "type": "integer"
+                },
+                "satisfaction_percentage": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/video-chat/consultant-time/start/{ConsultantTimeId}/": {
+      "post": {
+        "tags": [
+          "Video-Chat"
+        ],
+        "summary": "Request for start video chat",
+        "operationId": "startVideoChat",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ConsultantTimeId",
+            "required": true,
+            "type": "integer",
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "meetingId": {
+                  "type": "integer"
+                },
+                "roomUrl": {
+                  "type": "string"
+                },
+                "hostRoomUrl": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "endDate": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Token": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": [
+        "userName"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "password_repetition": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

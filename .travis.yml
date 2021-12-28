@@ -1,0 +1,31 @@
+language: python
+python:
+  - "3.8"
+
+services:
+  - docker
+# - postgres
+
+before_install:
+  - git checkout Development
+
+install:
+  - pip install -r requirements.txt
+  - pip install docker-compose
+
+before_script:
+  - docker network create consultant_network
+  - docker network create nginx_network
+  - docker volume create consultant_postgresql
+  - docker volume create consultant_static_volume
+  - docker volume create consultant_files_volume
+  
+script:
+  - docker-compose run --rm consultant sh -c "python manage.py test"
+deploy:
+  provider: script
+  script:
+    heroku container:login && heroku container:push web --app consultant-iust && heroku container:release web --app consultant-iust 
+  skip_cleanup: true
+  on:
+    branch: Development

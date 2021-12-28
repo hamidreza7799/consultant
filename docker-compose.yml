@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  consultant:
+    container_name: consultant
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/consultant
+      - consultant_static_volume:/consultant/static
+      - consultant_files_volume:/consultant/files
+    command: >
+      sh -c " python manage.py migrate &&
+              python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - consultant_network
+      - nginx_network
+    depends_on:
+      - consultant_postgresql
+  consultant_postgresql:
+    image: postgres:12
+    container_name: consultant_postgresql
+    volumes:
+      - consultant_postgresql:/var/lib/postgresql/data
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - consultant_network
+
+volumes:
+  consultant_postgresql:
+    external: true
+  consultant_static_volume:
+    external: true
+  consultant_files_volume:
+    external: true
+networks:
+  consultant_network:
+    external: true
+  nginx_network:
+    external: true
